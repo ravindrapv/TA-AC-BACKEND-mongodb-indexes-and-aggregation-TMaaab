@@ -5,18 +5,51 @@ Insert the data present in users.json into local mongodb database using `mongoim
 Write aggregation queries to perform following tasks.
 
 1. Find all users who are active.
-
+```js
+db.orders.aggregate([
+  { $match: { status: "A" } },
+  { $group: { _id: "$cust_id", total: { $sum: "$amount" } } },
+]);
+```
 2. Find all users whose name includes `blake` case insensitive.
-
-3. Find all males.
+```js
+> db.customers.aggregate([
+  { $match: { gender: 'Male' }}
+]);
+```
 
 4. Find all active males.
+```js
+> db.customers.aggregate([
+  { $match: { gender: 'Male' }}
+]);
+```
 
 5. Find all active females whose age is >= 25.
-
+```js
+> db.customers.aggregate([
+  { $match: { gender: 'female' }}
+]);
+```
 6. Find all 40+ males with green eyecolor.
-
+```js
+{
+  $project: {
+    name: 1,
+    age: 1,
+    info: {
+      eye: "$eyeColor",
+      city: "$address.city"
+    }
+  }
+}
+```
 7. Find all blue eyed men working in 'USA'.
+```js
+> db.customers.aggregate([
+  { $match: {eye: 'men in USA' }}
+]);
+```
 
 8. Find all female working in Germany with green eyes and apple as favoriteFruit.
 
